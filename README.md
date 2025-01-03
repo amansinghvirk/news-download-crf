@@ -237,3 +237,47 @@ gcloud functions deploy $FUNCTION_NAME \
 ```
 python test_crf.py --crf_url replace-it-with-url-of-the-deployed-function
 ```
+
+# Stage 5: Deploy authenticated Cloud Run Function
+
+```
+gcloud functions deploy $FUNCTION_NAME \
+	--gen2     \
+	--runtime=python312     \
+	--run-service-account=$SVC_ACCOUNT_EMAIL \
+	--region=$REGION     \
+	--source=.     \
+	--entry-point=get_website_articles     \
+	--trigger-http     \
+  --max-instances 5 \
+	--no-allow-unauthenticated \
+	--env-vars-file .env.yaml \
+	--memory=1024Mi
+
+```
+
+## Create new service principal and bind it to invoke the cloud function
+
+```
+export SVC_INVOKER_ACCOUNT=news-downloader-cf-invoker
+export SVC_INVOKER_ACCOUNT_EMAIL=$SVC_ACCOUNT@$PROJECT_ID.iam.gserviceaccount.com
+export SVC_INVOKDER_KEY_FILE=path-to-save-the-credentials
+```
+
+```
+gcloud iam service-accounts create $SVC_INVOKER_ACCOUNT
+```
+
+```
+gcloud functions add-invoker-policy-binding $FUNCTION_NAME \
+  --member=serviceAccount:$SVC_INVOKER_ACCOUNT_EMAIL
+```
+
+```
+gcloud iam service-accounts keys create $SVC_INVOKDER_KEY_FILE \
+    --iam-account=$SVC_INVOKER_ACCOUNT_EMAIL
+```
+
+```
+python test_crf.py --crf_url https://us-central1-prj-smart-news.cloudfunctions.net/news-downloader-crf --key_file <path-to-invoker-credentials-json>
+```
