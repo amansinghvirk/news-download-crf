@@ -125,3 +125,16 @@ REGION=us-central1
 NEWS_BUCKET=bucket-smart-news-2025010113
 DATABASE_NAME=smart-news-db-2025010113
 ```
+
+# Stage 2: Setup environment for the application
+
+- Create and activate Conda or virutal environment with Python 3.12
+- install dependencies from requirements.txt
+
+## Setup up project code
+
+## Execute
+
+```
+python main.py --newssite 'http://cnn.com' --docs_count 5
+```
