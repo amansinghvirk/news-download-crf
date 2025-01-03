@@ -11,11 +11,6 @@ Argumennts:
     - newssite: link to the website from where news needs to be downloaded e.g. http://cnn.com
     - docs_count (default=0): if specified will only download the next n number of news articles
 
-Usage:
-    - passing command line parameters
-        python main.py --newssite 'http://cnn.com' --docs_count 5
-
-    
 
 Dependencies:
     - Following are the dependencies for the program logic to execute
@@ -39,6 +34,8 @@ import logging
 from dotenv import load_dotenv
 from src.get_articles import download_articles
 
+import functions_framework
+
 def main(news_site: str, num_of_docs: int=0) -> None:
     logging.info("Starting proccess...")
 
@@ -47,6 +44,26 @@ def main(news_site: str, num_of_docs: int=0) -> None:
         return None
 
     msg = download_articles(news_site=news_site, num_of_docs=num_of_docs)
+
+    return msg
+
+@functions_framework.http
+def get_website_articles(request): 
+    if request.args:
+        docs_count = request.args.get('docs_count')
+        newssite = request.args.get('newssite') 
+    elif request.get_json():
+        request_json = request.get_json()
+        docs_count = request_json['docs_count']
+        newssite = request_json['newssite']
+    elif request.values:
+        request_data = request.values
+        docs_count = request_data['docs_count']
+        newssite = request_data['newssite']
+    else:
+        return f"Must specify newsite and docs count"
+
+    msg = download_articles(news_site=newssite, num_of_docs=int(docs_count))
 
     return msg
 

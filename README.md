@@ -138,3 +138,20 @@ DATABASE_NAME=smart-news-db-2025010113
 ```
 python main.py --newssite 'http://cnn.com' --docs_count 5
 ```
+
+# Stage 3: Setup and Test Cloud Run Funciton locally
+
+- run function locally
+```
+functions-framework --target get_website_articles
+```
+
+### Test the url with test script by passing url of the cloud run function
+
+```
+python test_crf.py --crf_url http://127.0.0.1:8080
+```
+
+### Expected result
+b'5 articles parsed form http://cnn.com and saved to cloud storage!'
+
