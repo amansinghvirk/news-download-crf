@@ -281,3 +281,27 @@ gcloud iam service-accounts keys create $SVC_INVOKDER_KEY_FILE \
 ```
 python test_crf.py --crf_url https://us-central1-prj-smart-news.cloudfunctions.net/news-downloader-crf --key_file <path-to-invoker-credentials-json>
 ```
+
+# FINAL: Clean Resources
+
+# Delete service accounts
+```
+gcloud iam service-accounts delete $SVC_ACCOUNT_EMAIL
+gcloud iam service-accounts delete $SVC_INVOKER_ACCOUNT_EMAIL
+```
+
+# Delete the deployed Cloud Run Function
+```
+gcloud functions delete $FUNCTION_NAME 
+```
+
+# Delete cloud bucket with objects
+```
+gcloud storage rm -r gs://$NEWS_BUCKET 
+```
+
+# Delete the Firestore database
+```
+gcloud firestore databases delete --database=$FIRESTORE_DATABASE 
+```
+
