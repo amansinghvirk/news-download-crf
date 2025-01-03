@@ -135,6 +135,9 @@ DATABASE_NAME=smart-news-db-2025010113
 
 ## Execute
 
+## Add collection name to the .env file
+COLLECTION_NAME=articles
+
 ```
 python main.py --newssite 'http://cnn.com' --docs_count 5
 ```
@@ -155,3 +158,82 @@ python test_crf.py --crf_url http://127.0.0.1:8080
 ### Expected result
 b'5 articles parsed form http://cnn.com and saved to cloud storage!'
 
+# Stage 4: Deploy Unauthorized Cloud Run Function
+
+### Setup environment variable for Cloud Run Function name and assign additional permissions required to the service principal
+
+```
+export FUNCTION_NAME=replace-with-cloud-run-function-name
+```
+
+e.g
+```
+export FUNCTION_NAME=news-downloader-crf
+```
+
+### Assign privilages to the service account
+
+```
+gcloud projects add-iam-policy-binding $PROJECT_ID \
+  --member="serviceAccount:$SVC_ACCOUNT_EMAIL" \
+  --role="roles/cloudbuild.builds.editor"
+
+# Allow service account access to logs
+gcloud projects add-iam-policy-binding $PROJECT_ID \
+  --member="serviceAccount:$SVC_ACCOUNT_EMAIL" \
+  --role="roles/logging.viewer"
+
+# Allow this service account to deploy
+gcloud iam service-accounts add-iam-policy-binding $SVC_ACCOUNT_EMAIL \
+  --member="serviceAccount:$SVC_ACCOUNT_EMAIL" \
+  --role="roles/iam.serviceAccountUser"
+
+gcloud projects add-iam-policy-binding $PROJECT_ID \
+  --member="serviceAccount:$SVC_ACCOUNT_EMAIL" \
+  --role=roles/run.admin
+
+gcloud projects add-iam-policy-binding $PROJECT_ID \
+  --member="serviceAccount:$SVC_ACCOUNT_EMAIL" \
+  --role=roles/cloudfunctions.admin
+```
+
+## Create .env.yaml file in the project folder to store the environment variables required for function to run in GCP
+
+```.env.yaml
+NEWS_BUCKET: name-of-the-cloud-bucket-created-in-previous-steps
+DATABASE_NAME: name-of-the-firestore-database-created-in-previous-steps
+COLLECTION_NAME: articles
+```
+
+e.g.
+```
+NEWS_BUCKET: bucket-smart-news-2025010113
+DATABASE_NAME: smart-news-db-2025010113
+COLLECTION_NAME: articles
+```
+
+## Deploy Unauthorized function to the GCP project
+
+```
+gcloud functions deploy $FUNCTION_NAME \
+	--gen2     \
+	--runtime=python312     \
+	--run-service-account=$SVC_ACCOUNT_EMAIL \
+	--region=$REGION     \
+	--source=.     \
+	--entry-point=get_website_articles     \
+	--trigger-http     \
+  --max-instances 5 \
+	--allow-unauthenticated \
+	--env-vars-file .env.yaml \
+	--memory=1024Mi
+
+```
+
+### Copy the URL of the function
+
+### Test the url with test script by passing url of the cloud run function
+
+```
+python test_crf.py --crf_url replace-it-with-url-of-the-deployed-function
+```
