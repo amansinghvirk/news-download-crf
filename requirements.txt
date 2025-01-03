@@ -4,3 +4,7 @@ google-cloud-firestore==2.19.0
 newspaper3k==0.2.8
 python-dotenv==1.0.1
 lxml_html_clean==0.4.1
+google-auth 
+google-auth-oauthlib 
+google-auth-httplib2 
+google-api-python-client
