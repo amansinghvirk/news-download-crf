@@ -158,7 +158,7 @@ python test_crf.py --crf_url http://127.0.0.1:8080
 ### Expected result
 b'5 articles parsed form http://cnn.com and saved to cloud storage!'
 
-# Stage 4: Deploy Unauthorized Cloud Run Function
+# Stage 4: Deploy unauthenticated Cloud Run Function
 
 ### Setup environment variable for Cloud Run Function name and assign additional permissions required to the service principal
 
@@ -212,7 +212,7 @@ DATABASE_NAME: smart-news-db-2025010113
 COLLECTION_NAME: articles
 ```
 
-## Deploy Unauthorized function to the GCP project
+## Deploy unauthenticated function to the GCP project
 
 ```
 gcloud functions deploy $FUNCTION_NAME \
