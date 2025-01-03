@@ -1,0 +1,6 @@
+functions-framework==3.8.2
+google-cloud-storage==2.19.0
+google-cloud-firestore==2.19.0
+newspaper3k==0.2.8
+python-dotenv==1.0.1
+lxml_html_clean==0.4.1
