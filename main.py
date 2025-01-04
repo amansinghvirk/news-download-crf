@@ -28,15 +28,26 @@ Dependencies:
 
 """
 
-import os
 import argparse
 import logging
+import functions_framework
 from dotenv import load_dotenv
+
 from src.get_articles import download_articles
 
-import functions_framework
 
-def main(news_site: str, num_of_docs: int=0) -> None:
+def main(news_site: str, num_of_docs: int = 0) -> str:
+    """Main function to execute with arguments passed as command line
+    Arguments:
+        news_site (str): URL of the site from which articles need to be extracted
+            e.g. http://cnn.com, http://bbc.com
+        num_of_docs (int) default=0: Number of articles need to be parsed in execution
+
+    Return:
+        str: message from the download_articles function
+
+
+    """
     logging.info("Starting proccess...")
 
     if len(news_site) == 0:
@@ -47,39 +58,56 @@ def main(news_site: str, num_of_docs: int=0) -> None:
 
     return msg
 
+
 @functions_framework.http
-def get_website_articles(request): 
+def get_website_articles(request):
+    """
+    Function to be called when http request is passed to the url.
+
+    Arguments:
+        http-request: payload with newsiste and docs_count as parameters
+
+    Return:
+        str: message from the download_articles function
+
+
+    """
     if request.args:
-        docs_count = request.args.get('docs_count')
-        newssite = request.args.get('newssite') 
+        docs_count = request.args.get("docs_count")
+        newssite = request.args.get("newssite")
     elif request.get_json():
         request_json = request.get_json()
-        docs_count = request_json['docs_count']
-        newssite = request_json['newssite']
+        docs_count = request_json["docs_count"]
+        newssite = request_json["newssite"]
     elif request.values:
         request_data = request.values
-        docs_count = request_data['docs_count']
-        newssite = request_data['newssite']
+        docs_count = request_data["docs_count"]
+        newssite = request_data["newssite"]
     else:
-        return f"Must specify newsite and docs count"
+        return "Must specify newsite and docs count"
 
     msg = download_articles(news_site=newssite, num_of_docs=int(docs_count))
 
     return msg
 
+
 if __name__ == "__main__":
 
     logging.basicConfig(
-        format="{asctime} - {levelname} - {message}", 
-        style="{", 
+        format="{asctime} - {levelname} - {message}",
+        style="{",
         datefmt="%Y-%m-%d %H:%M",
         level=logging.DEBUG,
     )
 
     load_dotenv()
-    parser = argparse.ArgumentParser(prog='news-downloader')
-    parser.add_argument('--newssite', help='Website link from where news to be downloaded', default="")
-    parser.add_argument('--docs_count', help='Number of docs to fetch', type=int,  default=0)
+    parser = argparse.ArgumentParser(prog="news-downloader")
+    parser.add_argument(
+        "--newssite", help="Website link from where news to be downloaded", default=""
+    )
+    parser.add_argument(
+        "--docs_count", help="Number of docs to fetch", type=int, default=0
+    )
     args = parser.parse_args()
-    msg = main(args.newssite, args.docs_count)
-    print(msg)
+    message = main(args.newssite, args.docs_count)
+    print(message)

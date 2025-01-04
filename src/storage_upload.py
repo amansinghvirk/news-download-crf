@@ -9,16 +9,14 @@ Description:
     - upload the file to the bucket
 
 """
+
 import os
 import logging
 from google.cloud import storage
 
 
 # define function that uploads a file from the bucket
-def upload_news_article(
-    source_file_name: str, 
-    destination_file_name: str
-) -> bool: 
+def upload_news_article(source_file_name: str, destination_file_name: str) -> bool:
     """Upload file to the GCP cloud storage bucket"""
     try:
         bucket_name = os.environ["NEWS_BUCKET"]
@@ -31,5 +29,5 @@ def upload_news_article(
         return True
     except Exception as e:
         logging.error(e)
-    
+
     return False
