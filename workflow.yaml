@@ -1,0 +1,25 @@
+main:
+  steps:
+    - extractArticles:
+        parallel:
+          branches:
+              - getBranch0:
+                  steps:
+                    - extractArticlesStep0:
+                          call: http.post
+                          args:
+                            url: 
+                            auth:
+                              type: OIDC
+                            body: {'newssite': 'http://cnn.com', 'docs_count': '10'}
+                          result: Articles0
+              - getBranch1:
+                  steps:
+                    - extractArticlesStep1:
+                          call: http.post
+                          args:
+                            url: 
+                            auth:
+                              type: OIDC
+                            body: {'newssite': 'http://bbc.com', 'docs_count': '10'}
+                          result: Articles1
