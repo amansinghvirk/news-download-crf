@@ -353,7 +353,7 @@ gcloud functions deploy $FUNCTION_NAME \
 	--source=.     \
 	--entry-point=get_website_articles     \
 	--trigger-http     \
-  --max-instances 2 \
+  	--max-instances 2 \
 	--allow-unauthenticated \
 	--env-vars-file .env.yaml \
 	--memory=1024Mi
@@ -414,7 +414,7 @@ gcloud functions deploy $FUNCTION_NAME \
 	--source=.     \
 	--entry-point=get_website_articles     \
 	--trigger-http     \
-  --max-instances 2 \
+  	--max-instances 2 \
 	--no-allow-unauthenticated \
 	--env-vars-file .env.yaml \
 	--memory=1024Mi
