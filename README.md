@@ -11,6 +11,8 @@ This application fetches news articles from a given website URL.
 
 **Objective:** This project demonstrates the development and deployment of an HTTP-triggered Cloud Run Function with the necessary privileges to interact with other Google Cloud services.
 
+**While this project utilizes `gcloud` for initial deployment, it adheres to Infrastructure as Code principles by promoting a repeatable and version-controlled deployment process.** This can be further enhanced by migrating to a declarative configuration tool like Terraform.
+
 # Table of Content
 
 - [News Articles Downloader](#news-articles-downloader)
