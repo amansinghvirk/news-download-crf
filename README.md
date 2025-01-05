@@ -1,4 +1,4 @@
-# News Articles Downloader
+# Serverless News Feed: Building a News Pipeline with Cloud Run Functions
 
 This application fetches news articles from a given website URL.
 
