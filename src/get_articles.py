@@ -98,7 +98,7 @@ def download_articles(news_site: str, num_of_docs: int = 0) -> str:
     if not clear_local_storage_path(local_temp_storage):
         print("Error cleaning local temp storage!")
 
-    return f"{n_parsed} articles parsed form {news_site} and saved to cloud storage!"
+    return f"{n_parsed} articles parsed from {news_site} and saved to cloud storage!"
 
 
 def get_papers(news_site: str):
