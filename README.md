@@ -237,13 +237,13 @@ In this section will deploy the application as Cloud Run Function, but before de
 * Execute the application locally using the following command:
 
 ```bash
-python main.py --newssite 'http://cnn.com' --docs_count 5
+python main.py --newssite website_url --docs_count 5
 ```
 
 * Expected output:
 
 ```
-5 articles parsed form http://cnn.com and saved to cloud storage!
+5 articles parsed form url and saved to cloud storage!
 ```
 
 **Note:** if you get following error ```google.api_core.exceptions.PermissionDenied: 403 Missing or insufficient permissions.``` 
@@ -277,12 +277,12 @@ python test_crf.py --crf_url http://127.0.0.1:8080
 If the function runs successfully, the test script should produce output similar to:
 
 ```bash
-b'5 articles parsed form http://cnn.com and saved to cloud storage!'
+b'5 articles parsed form url and saved to cloud storage!'
 ```
 
 This indicates that the function was able to:
 
-- Fetch articles from the provided URL (http://cnn.com in this example).
+- Fetch articles from the provided URL.
 - Parse the articles.
 - Save the parsed data to Cloud Storage.
 
@@ -396,7 +396,7 @@ Expected Output:
 If the function runs successfully, the test script should produce output similar to:
 
 ```
-b'5 articles parsed form http://cnn.com and saved to cloud storage!'
+b'5 articles parsed form url and saved to cloud storage!'
 ```
 
 ## Deploy an Authenticated Cloud Run Function
@@ -483,7 +483,7 @@ python test_crf.py --crf_url $FUNCTION_URI --key_file $SVC_INVOKDER_KEY_FILE
 If the function is deployed and configured correctly, running the test script with authentication should now produce the expected output:
 
 ```
-b'5 articles parsed form http://cnn.com and saved to cloud storage!'
+b'5 articles parsed form url and saved to cloud storage!'
 ```
 
 # Deploying a Workflow to Invoke Cloud Run Functions in Parallel
@@ -509,7 +509,7 @@ main:
                         auth:                # Authentication configuration
                           type: OIDC          # Authentication type (OpenID Connect)
                         body:                 # Request body for the HTTP POST call
-                          newssite: 'http://cnn.com'  # Parameter for the first function (news website URL)
+                          newssite: website_url1 # Parameter for the first function (news website URL)
                           docs_count: '10'        # Parameter for the first function (number of documents to download)
                       result: Articles0     # Name to store the result of the step execution
 
@@ -522,7 +522,7 @@ main:
                         auth:
                           type: OIDC
                         body:
-                          newssite: 'http://bbc.com'
+                          newssite: website_url2
                           docs_count: '10'
                         result: Articles1
 ```
