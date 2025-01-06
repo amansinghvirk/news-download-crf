@@ -83,7 +83,7 @@ To develop and test this application locally, you'll need Python 3.12 and a few 
   - Using venv (built-in with Python):
 
     ```bash
-    python3.12 -m venv <your_env_name> 
+    python -m venv <your_env_name> 
     source <your_env_name>/bin/activate  # On Linux/macOS
     <your_env_name>\Scripts\activate.bat  # On Windows
     ```
@@ -243,7 +243,7 @@ python main.py --newssite website_url --docs_count 5
 * Expected output:
 
 ```
-5 articles parsed form url and saved to cloud storage!
+5 articles parsed from url and saved to cloud storage!
 ```
 
 **Note:** if you get following error ```google.api_core.exceptions.PermissionDenied: 403 Missing or insufficient permissions.``` 
@@ -277,7 +277,7 @@ python test_crf.py --crf_url http://127.0.0.1:8080
 If the function runs successfully, the test script should produce output similar to:
 
 ```bash
-b'5 articles parsed form url and saved to cloud storage!'
+b'5 articles parsed from url and saved to cloud storage!'
 ```
 
 This indicates that the function was able to:
@@ -483,7 +483,7 @@ python test_crf.py --crf_url $FUNCTION_URI --key_file $SVC_INVOKDER_KEY_FILE
 If the function is deployed and configured correctly, running the test script with authentication should now produce the expected output:
 
 ```
-b'5 articles parsed form url and saved to cloud storage!'
+b'5 articles parsed from url and saved to cloud storage!'
 ```
 
 # Deploying a Workflow to Invoke Cloud Run Functions in Parallel
