@@ -20,10 +20,12 @@ from google.oauth2 import service_account
 from google.auth.transport.requests import AuthorizedSession
 
 
+TEST_DATA = {"newssite": "https://finance.yahoo.com", "docs_count": "5"}
+
 def main(url, key_file=None):
     """test the cloud run function url by trigger function using http-trigger"""
 
-    test_data = {"newssite": "http://cnn.com", "docs_count": "5"}
+    
 
     if key_file:
         creds = service_account.IDTokenCredentials.from_service_account_file(
@@ -33,10 +35,10 @@ def main(url, key_file=None):
         authed_session = AuthorizedSession(creds)
 
         # make authenticated request and print the response, status_code
-        response = authed_session.post(url, json=test_data, timeout=100)
+        response = authed_session.post(url, json=TEST_DATA, timeout=100)
 
     else:
-        response = requests.post(url, json=test_data, timeout=100)
+        response = requests.post(url, json=TEST_DATA, timeout=100)
 
     if response.status_code == 200:
         print(response.content)

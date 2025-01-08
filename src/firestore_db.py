@@ -39,6 +39,27 @@ def create_item(doc_id: str, data: dict) -> bool:
         return False
 
 
+def is_article_registered(domain_name: str, url: str) -> bool:
+    """Returns the true if url exists in the database"""
+
+    try:
+        db = get_firestore_client()
+        query = (
+            db.collection(os.environ["COLLECTION_NAME"])
+            .where(filter=FieldFilter("domain", "==", domain_name))
+            .where(filter=FieldFilter("url", "==", url))
+        )
+
+
+        if query.count().get()[0][0].value > 0:
+            return True
+
+        return False
+
+    except Exception as e:
+        logging.error("Error fetching the articles list")
+        raise e
+
 def get_registered_articles(domain_name: str) -> list:
     """Returns the list of urls for the specified domain from the downloaded articles"""
 
