@@ -15,8 +15,8 @@ This application fetches news articles from a given website URL.
 
 For a detailed walkthrough and deeper understanding of the project, please refer to the following articles on Medium:
 
-[Link to Part 1 Article on Medium: Building a Scalable News Pipeline with Google Cloud Run Functions](https://medium.com/@aman.virk.ds/building-a-scalable-news-pipeline-with-google-cloud-run-functions-f555a64c1fec)
-[Link to Part 2 Article on Medium: Building a Scalable News Pipeline with Google Cloud Run Functions](https://medium.com/@aman.virk.ds/building-a-scalable-news-pipeline-with-google-cloud-run-functions-part-2-6a3e920a7605)
+- [Link to Part 1 Article on Medium: Building a Scalable News Pipeline with Google Cloud Run Functions](https://medium.com/@aman.virk.ds/building-a-scalable-news-pipeline-with-google-cloud-run-functions-f555a64c1fec)
+- [Link to Part 2 Article on Medium: Building a Scalable News Pipeline with Google Cloud Run Functions](https://medium.com/@aman.virk.ds/building-a-scalable-news-pipeline-with-google-cloud-run-functions-part-2-6a3e920a7605)
 
 These articles provide a step-by-step guide, including code explanations and troubleshooting tips.
 
