@@ -23,7 +23,7 @@ import logging
 from uuid import uuid4
 from newspaper import build, parsers, Article
 
-from .firestore_db import get_registered_articles, create_item
+from .firestore_db import is_article_registered, create_item
 from .utils import (
     get_domain_name,
     local_storage_path,
@@ -52,16 +52,18 @@ def download_articles(news_site: str, num_of_docs: int = 0) -> str:
     domain_name = get_domain_name(news_site)
     storage_path = local_storage_path(domain_name=local_temp_storage)
 
-    papers = get_papers(news_site)
-    urls_to_download = get_new_article_urls(papers, domain_name)
-
-    if num_of_docs > 0:
-        urls_to_download = urls_to_download[:num_of_docs]
+    papers = build(news_site, memoize_articles=False)
 
     n_parsed = 0
-    for url in urls_to_download:
 
-        article = parse_article(url)
+    for paper in papers.articles:
+
+        print(paper.url)
+        # Check if article not in database
+        if not is_article_registered(domain_name, paper.url):       
+            article = parse_article(paper.url)
+        else:
+            article = None
 
         if article:
 
@@ -95,33 +97,13 @@ def download_articles(news_site: str, num_of_docs: int = 0) -> str:
 
             n_parsed += 1
 
+            if n_parsed >= num_of_docs:
+                break
+
     if not clear_local_storage_path(local_temp_storage):
         print("Error cleaning local temp storage!")
 
     return f"{n_parsed} articles parsed from {news_site} and saved to cloud storage!"
-
-
-def get_papers(news_site: str):
-    """Set parser for news site"""
-    papers = build(news_site, memoize_articles=False)
-
-    return papers
-
-
-def get_new_article_urls(papers: parsers, domain_name: str) -> tuple:
-    """Compare the parser urls with urls in registered database
-    - Return new URLs
-    """
-
-    registerd_articles = get_registered_articles(domain_name=domain_name)
-
-    urls_to_download = [
-        article.url
-        for article in papers.articles
-        if article.url not in registerd_articles
-    ]
-
-    return urls_to_download
 
 
 def parse_article(url: str) -> Article:
