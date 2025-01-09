@@ -12,7 +12,7 @@ Description:
         - search the news website for the posts and compare with downloaded article urls,
             if there are any news articles available
         - download the not downloaded articles
-        - save the article in json form in temp directory, upload the document to GCP cloud storage
+        - save the article in raw text format in temp directory, upload the document to GCP cloud storage
             and delete the temp file
         - add the item to the firestore collections
 
@@ -70,18 +70,19 @@ def download_articles(news_site: str, num_of_docs: int = 0) -> str:
             # format to dictionary
             article_data = _create_document(domain_name, article)
 
+            print(article_data)
             # create json document
             article_id = uuid4().hex
             article_file_path = create_document_file(
                 storage_path=storage_path,
                 article_id=article_id,
-                article_data=article_dict,
+                article_data=article_data,
             )
 
             # upload to cloud storage
             upload_news_article(
                 source_file_name=article_file_path,
-                destination_file_name=f"{domain_name}/{article_id}.json",
+                destination_file_name=f"{domain_name}/{article_id}.txt",
             )
 
             # save to firestore databse

@@ -15,7 +15,7 @@ This application fetches news articles from a given website URL.
 
 # Table of Content
 
-- [News Articles Downloader](#news-articles-downloader)
+- [Serverless News Feed: Building a News Pipeline with Cloud Run Functions](#serverless-news-feed-building-a-news-pipeline-with-cloud-run-functions)
 - [Table of Content](#table-of-content)
 - [How it Works](#how-it-works)
 - [Prerequisites](#prerequisites)
@@ -53,7 +53,7 @@ This application fetches news articles from specified websites.
 
    - The application parses the downloaded articles.
    - The parsed data is saved in two locations:
-     - **Google Cloud Storage:** Each article is stored as a separate JSON document.
+     - **Google Cloud Storage:** Each article is stored as a separate document.
      - **Firestore Database:** Each article is saved as a document within a collection in Firestore.
 
     ![app-flow-diagram](assets/CRF-diagram.png)

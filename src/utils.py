@@ -45,12 +45,12 @@ def clear_local_storage_path(domain_name: str) -> str:
 
 
 def create_document_file(storage_path: str, article_id: str, article_data: dict) -> str:
-    """Store the article data in JSON format to local temp path"""
+    """Store the article text format to local temp path"""
 
-    article_file_name = f"{article_id}.json"
-    article_file_path = os.path.join(storage_path, f"{article_file_name}.json")
+    article_file_name = f"{article_id}.txt"
+    article_file_path = os.path.join(storage_path, f"{article_file_name}.txt")
 
-    with open(article_file_path, "w") as fp:
-        json.dump(article_data, fp)
+    with open(article_file_path, "w", encoding="utf-8") as fp:
+        fp.write(article_data["text"])
 
     return article_file_path
