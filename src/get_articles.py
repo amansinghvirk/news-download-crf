@@ -70,7 +70,6 @@ def download_articles(news_site: str, num_of_docs: int = 0) -> str:
             # format to dictionary
             article_data = _create_document(domain_name, article)
 
-            print(article_data)
             # create json document
             article_id = uuid4().hex
             article_file_path = create_document_file(
