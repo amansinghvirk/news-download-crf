@@ -23,4 +23,4 @@ gcloud storage rm -r gs://$NEWS_BUCKET --quiet
 
 
 # Delete the firestore database
-gcloud firestore databases delete --database=$FIRESTORE_DATABASE --quiet
+gcloud firestore databases delete --database=$DATABASE_NAME --quiet
