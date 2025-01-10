@@ -13,6 +13,13 @@ This application fetches news articles from a given website URL.
 
 **While this project utilizes `gcloud` for initial deployment, it adheres to Infrastructure as Code principles by promoting a repeatable and version-controlled deployment process.** This can be further enhanced by migrating to a declarative configuration tool like Terraform.
 
+For a detailed walkthrough and deeper understanding of the project, please refer to the following articles on Medium:
+
+- [Link to Part 1 Article on Medium: Building a Scalable News Pipeline with Google Cloud Run Functions](https://medium.com/@aman.virk.ds/building-a-scalable-news-pipeline-with-google-cloud-run-functions-f555a64c1fec)
+- [Link to Part 2 Article on Medium: Building a Scalable News Pipeline with Google Cloud Run Functions](https://medium.com/@aman.virk.ds/building-a-scalable-news-pipeline-with-google-cloud-run-functions-part-2-6a3e920a7605)
+
+These articles provide a step-by-step guide, including code explanations and troubleshooting tips.
+
 # Table of Content
 
 - [Serverless News Feed: Building a News Pipeline with Cloud Run Functions](#serverless-news-feed-building-a-news-pipeline-with-cloud-run-functions)
